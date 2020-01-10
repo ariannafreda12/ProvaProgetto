@@ -1,0 +1,10 @@
+dist: trusty
+
+
+addons:
+ sonarcloud:
+  organization: "ariannafreda12"
+  token: "ea925d60e24786ee13ecebcdd75383f5fb867f14"
+script:
+-ant build
+-sonar-scanner
