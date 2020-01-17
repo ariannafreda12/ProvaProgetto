@@ -1,0 +1,19 @@
+sonar.projectKey=ariannafreda12_ProvaProgetto
+sonar.organization=ariannafreda12
+
+# This is the name and version displayed in the SonarCloud UI.
+#sonar.projectName=ProvaProgetto
+#sonar.projectVersion=1.0
+ 
+# Path is relative to the sonar-project.properties file. Replace "\" by "/" on Windows.
+
+sonar.links.homepage=https://github.com/ariannafreda12/ProvaProgetto
+sonar.links.ci=https://travis-ci.org/ariannafreda12/ProvaProgetto
+sonar.links.scm=https://github.com/ariannafreda12/ProvaProgetto
+sonar.links.issue=https://github.com/ariannafreda12/ProvaProgetto/issues
+
+#sonar.sources=.
+sonar.login="8b23ab1af38e5f19245702bdf00d0ec67681cdce"
+ 
+# Encoding of the source code. Default is default system encoding
+#sonar.sourceEncoding=UTF-8
