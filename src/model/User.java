@@ -2,7 +2,7 @@ package model;
 
 public class User {
 		
-	private String username;
+	public String username;
 	private String password;
 	private String email;
 	
@@ -37,11 +37,7 @@ public class User {
 		this.email= email;
 	}
 
-	public void reset() {
-	    this.setEmail(null);
-	    this.setPassword(null);
-	    this.setUsername(null);
-	}
+	
 }
 	 
 

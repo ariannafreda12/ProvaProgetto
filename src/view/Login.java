@@ -4,7 +4,6 @@ package view;
 import bean.UserBean;
 import controller.GraphicController;
 import controller.LoginManager;
-import controller.RecipeManager;
 import exception.EmptyFieldexception;
 import exception.UsernameNotFoundException;
 import javafx.event.ActionEvent;
@@ -21,7 +20,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.Recipe;
 import model.User;
 import javafx.scene.Node;
 
@@ -36,7 +34,7 @@ public class Login {
 	    public TextField userField;
 		@FXML
 		public Text registrationText;
-			
+		
 		
 	    //login method
 	    public void LoginMethod(ActionEvent actionEvent) throws Exception {
@@ -50,11 +48,12 @@ public class Login {
 				 UserBean ub = new UserBean();
 		            ub.setPassword( pass );
 		            ub.setUsername(user);
+		            LoginManager um = LoginManager.getInstance();
 		            
-		            
-
-		            if (ub.validate()!= false) {
-		            
+		            if (ub.validate()!= false) 
+		            {
+		            	
+		            	um.setUser(ub);
 		            	((Node)(actionEvent.getSource())).getScene().getWindow().hide();
 		            	GraphicController graphicController = new GraphicController();
 		                graphicController.mealPage();

@@ -3,7 +3,7 @@
               Any modifications will be overwritten.
               To include a user specific buildfile here, simply create one in the same
               directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="build" name="WhatEat">
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="WhatEat!!!">
     <property environment="env"/>
     <property name="ECLIPSE_HOME" value="../../Desktop/eclipse/"/>
     <property name="debuglevel" value="source,lines,vars"/>
@@ -25,10 +25,10 @@
         <pathelement location="../../.p2/pool/plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
         <pathelement location="../../.p2/pool/plugins/org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
     </path>
-    <path id="WhatEat.classpath">
+    <path id="WhatEat!!!.classpath">
         <pathelement location="bin"/>
         <path refid="JUnit 5.libraryclasspath"/>
-        <pathelement location="../../Desktop/UNIVERSITA'/PROGETTO BASI/DBProject2/postgresql-42.1.4.jar"/>
+        <pathelement location="../../Desktop/ISPW19-20/PROGETTO/postgresql-42.2.5.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
@@ -50,7 +50,7 @@
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
             <src path="src"/>
-            <classpath refid="WhatEat.classpath"/>
+            <classpath refid="WhatEat!!!.classpath"/>
         </javac>
     </target>
     <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
@@ -67,14 +67,9 @@
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <antcall target="build"/>
     </target>
-    <target name="Main (1)">
+    <target name="Main (4)">
         <java classname="Main" failonerror="true" fork="yes">
-            <classpath refid="WhatEat.classpath"/>
-        </java>
-    </target>
-    <target name="Main">
-        <java classname="view.Main" failonerror="true" fork="yes">
-            <classpath refid="WhatEat.classpath"/>
+            <classpath refid="WhatEat!!!.classpath"/>
         </java>
     </target>
 </project>

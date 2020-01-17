@@ -1,14 +1,15 @@
 package controller;
 
 import java.util.ArrayList;
+
+import bean.RecipeBean;
 import dao.RecipeDao;
-import dao.UserDao;
 import model.Recipe;
 
 public class RecipeManager {
 	
 	private static RecipeManager instance = null;
-	private Recipe recipe;//singleton
+	private RecipeBean recipe;//singleton
 
     public RecipeManager() {}
 
@@ -20,27 +21,30 @@ public class RecipeManager {
         return instance;
     }
     
-    public Recipe getRecipe() {
+    public RecipeBean getRecipe() {
         return recipe;
      }
 
-    public void setRecipe(Recipe r){
+    public void setRecipe(RecipeBean r){
         recipe = r;
     }
      
-
-    
     public static ArrayList<Recipe> foundIngredient(ArrayList<String> ingredients,String category, String difficulty) {
     	return RecipeDao.ingredientsDao(ingredients,category,difficulty);
     }
     
-    public  Recipe chooseRecipe(String title) {
+    public static Recipe chooseRecipe(String title) {
     	return RecipeDao.chooseRecipeDao(title);
     }
-    public boolean saveRecipe(String title, String preparation, String difficulty, String category, String time, String necessary) {
-    	return RecipeDao.saveRecipeDao(title, preparation, difficulty, category, time, necessary);
-    }
-    public boolean reviewRecipe(String title, int review) {
-    	return RecipeDao.reviewRecipeDao(title, review);
-    }
+
+	public boolean reviewRecipe(String title, int review) {
+		return RecipeDao.reviewRecipeDao(title, review);
+	}
+	
+	public boolean addReviewRecipe(String username, String title) {
+		return RecipeDao.addReviewDao(username, title);
+	}
+	public boolean checkReviewRecipe(String username, String title) {
+		return RecipeDao.checkReviewDao(username, title);
+	}
 }

@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import bean.RecipeBean;
 import controller.GraphicController;
+import controller.LoginManager;
 import controller.RecipeManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,17 +16,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import model.Recipe;
@@ -33,16 +38,23 @@ import model.Recipe;
 public class FoundRecipes {
 	@FXML
 	public Button backButton;
+	@FXML
+	public ImageView profileImg;
+	@FXML
+	public ImageView logOutimg;
+	@FXML
+	public ImageView note;
 
 	@FXML
     private static ObservableList<Recipe> list = FXCollections.observableArrayList();
 	
 
 	ArrayList <Recipe> recipe;	
+	GraphicController gc = new GraphicController();
 	
 	//instance of recipe manager for get difficulty, category and ingredient list
     RecipeManager rm= RecipeManager.getInstance();
-	Recipe rc=rm.getRecipe();
+	RecipeBean rb=rm.getRecipe();
 	
 	public ArrayList<Recipe> createList(ArrayList<Recipe> first){
 		
@@ -54,6 +66,11 @@ public class FoundRecipes {
 			}
 		}
 		return first;
+	}
+	
+	public void createNote(MouseEvent e) throws Exception {
+    	GraphicController graphicController = new GraphicController();
+        graphicController.notePage();
 	}
 	
 	public void start() throws Exception {
@@ -98,38 +115,42 @@ public class FoundRecipes {
         ingStage.show();
         
         
-		recipe=RecipeManager.foundIngredient(rc.ingredient,rc.category,rc.difficulty); 
+		recipe=RecipeManager.foundIngredient(rb.getIngredients(),rb.getCategory(),rb.getDifficulty()); 
+	
 		if (recipe!= null) {
 		//cycle for found recipes
-			
 			ArrayList <Recipe> secondList = createList(recipe);
-					
 			for(Recipe s : secondList) {
 				
 				//add title to the list
 				list.add(new Recipe (s.getTitle(), s.getPreparation(), s.getTime(),s.getReview())); 
 				tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 				tableView.setItems(list);
+				}
 			}
-				
-		}
+		
 		
 		tableView.addEventHandler(MouseEvent.MOUSE_CLICKED, (event -> {
-            GraphicController gc = new GraphicController();
+            
           
             try { 
             	
-            	RecipeBean rb = new RecipeBean();
+            	
+            	
             	
             	TablePosition<?, ?> pos= tableView.getSelectionModel().getSelectedCells().get(0);
             	int row = pos.getRow();
             	TableColumn col = pos.getTableColumn();
             	String t = (String) col.getCellObservableValue(row).getValue().toString();
-            	rc = rm.chooseRecipe(t);
+            	Recipe rc = new Recipe(0,null,null,null,null,null,null,0); 
+            	rc= rm.chooseRecipe(t);
             	
             	if(rb.validateRec(t)== true) { 
-              		rc.setTitle(t);
-            		rm.setRecipe(rc);
+              		rb.setTitle(t);
+              		rb.setPreparation(rc.getPreparation());
+              		rb.setNecessary(rc.getNecessary());
+              		rb.setTime(rc.getTime());
+            		rm.setRecipe(rb);
             		gc.showRecipe();
             	}
             	
@@ -138,13 +159,25 @@ public class FoundRecipes {
             }
         }));
 	}
-	
-	
-	
+
 	public void back(ActionEvent e) throws Exception {
 		list.clear();
 		((Node)(e.getSource())).getScene().getWindow().hide();
     	GraphicController graphicController = new GraphicController();
         graphicController.ingredientPage();
+	}
+	
+	public void myProfile(MouseEvent me) throws Exception {
+    	GraphicController graphicController = new GraphicController();
+        graphicController.profilePage();
+	}
+	
+	public void logOut(MouseEvent me) throws Exception {
+		LoginManager controller = new LoginManager();
+        controller.resetUser();
+        ((Node)(me.getSource())).getScene().getWindow().hide();
+        GraphicController graphicController = new GraphicController();
+        Stage stage = null;
+        graphicController.start(stage);
 	}
 }
